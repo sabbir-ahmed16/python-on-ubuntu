@@ -71,7 +71,7 @@ pyenv shell [PYTHON_VERSION]
 ```
 This will set the Python version only as long as your session is active. So after you close your terminal, everything will be back to default.
 
-## Creating Virtual Environment and Installing Package on that Environment
+## Method-1 Creating Virtual Environment and Installing Package on that Environment
 Python installation includes some basic packages and modules. Your Python version should include `pip` module by default. So, set the specific Python version as global Python version. After that open a new terminal and you can close the previous session.
 
 After that install `pipenv` using `pip` command. It will install some dependencies along with `pipenv`. Creating and maintaining virtual environment using `pipenv` is much easier.
@@ -108,13 +108,43 @@ pipenv install [PACKAGE_NAME]
 
 Exit the environment by just typing `exit`.
 
-## Deleting Virtual Environment
+### Deleting Virtual Environment
 
 You can delete a specific virtual environment from `~/.local/share/virtualenvs/` folder. Or you can delete all the virtual environments using -
 
 ```
 rm -rf ~/.local/share/virtualenvs
 ```
+
+## Method-2 Creating Virtual Environment and Installing Package on that Environment
+`pyenv` has a wonderful plugin called `pyenv-virtualenv` that makes working with multiple environments easy. Please visit the [link](https://github.com/pyenv/pyenv-virtualenv) to install `pyenv-virtualenv`. After installation, check if it installed properly by running the command `pyenv commands`. You should see the commands `virtualenv, virtualenv-delete, virtualenv-init, virtualenv-prefix, virtualenv` listed along with the other  commands. You can also update your `.bashrc` file as mentioned in the documentation of `pyenv-virtualenv`. 
+
+To create a virtual environment, first create a directory in your preferred place and go to that directory. Then run the following command.
+```
+pyenv virtualenv <python_version> <environment_name>
+```
+
+If you've updated your `.bashrc` file, you can activate your environment by running the following command:
+```
+pyenv local <environment_name>
+```
+It creates a `.python-version` file in the directory because it internally runs the bash command `eval "$(pyenv virtualenv-init -)". You can verify it by running the following command.
+```
+pyenv which python
+```
+You can see a new version has been created called <environment_name> and the python executable is pointing to that version.
+
+If you didn't modify your `.bashrc` file by adding the command `eval "$(pyenv virtualenv-init -)`, you can manually activate/deactivate your python versions with this:
+```
+pyenv activate <environment_name>
+```
+```
+pyenv deactivate
+```
+
+<div>
+  <b>NOTE: Setting a specific version of python as global python version may sometime cause problems. I found method-2 more friendly and easier to manage different python versions and python environments.</b>
+</div>
 
 ## Removing a Specific Version of Python
 
